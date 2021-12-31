@@ -88,8 +88,8 @@ def count_punctuation(tokenized_row):
 def count_upper(row):
     return sum(1 for c in row if c.isupper())
 
-# Raw Text's Average Sentense Length
-def avg_sentense_len(row):
+# Raw Text's Average Sentence Length
+def avg_sentence_len(row):
     s_list = row.split(".")
     sum = 0
     for s in s_list:
@@ -122,7 +122,7 @@ def add_features(tokenized, untokenized, *, punc = False, upper = False, sentenc
     if upper:
         return_vals.append(untokenized.apply(count_upper))
     if sentence_len:
-        return_vals.append(untokenized.apply(avg_sentense_len))
+        return_vals.append(untokenized.apply(avg_sentence_len))
     if profane:
         return_vals.append(tokenized.apply(count_profane_words))
     if length:
