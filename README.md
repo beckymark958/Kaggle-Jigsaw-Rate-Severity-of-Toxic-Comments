@@ -63,16 +63,41 @@ Raw text to be predicted the toxicity ranking
   - Average sentence length
   - Profanity Words percentage
   - Total comment length
+
 - Encoding:
     - Tf-Idf Vectorizer + generated features
-- 
+
+- Model Selection:
+  - Linear Regression
+  - Linear Supported Vector Regression (Linear SVR)
+  - Ridge Regression
+  - Random Forest Regression
 
 
-## Problems Encountered
-(1) Score of Validation data 
+## Discussion
+(1) Higher Score Predicted by Validation Data Does not Guarantee Higher Public Score Predicted on Testing Data
+ - The best score achieved for the validation data is 0.68 while its public score is 0.687, being almost the lowest public score.
+ - The calculated correlation between the two scores is 0.328.
+ - Possible reason of the low correlation could be, the public score calculates the similarity of ranking of the predicted scores, while the validation score represents pair-wise comparison accuracy.
+ - All datasets involve some form of subjective scoring.
 
-## How to Solve them
+![](Val_Score_vs_Public_Score.png)
 
+(2) Comparing the Models Being Used:
+- Linear Regression: 
+    - Used for most of the testing at the beginning since its calculation is quick and robust enough.
+    - Switched to more advanced models after finding those that are suitable
+- Supported Vector Regression(SVR):
+    - Due to the large amount of variables, SVR takes a long time to process, making it not the most ideal model for testing.
+    - The outcome usually slightly better than using linear regression.
+- Linear SVR:
+    - Substitute for the SVR method, since it is faster and the result is similar.
+- Ridge Model: 
+    - More stable comparing to Linear SVR.
 
+(3) Why Not Using Bert?
+- Most of the top ranking teams on the leaderboard use Bert as one of their blending methods. However, Bert requires better hardware specs to run smoothly. Aiming to train a model that is more generalized and not confined to hardware limitations, I decided not to use Bert during the model selection process.
+
+## Other Information
 Kaggle Competition Overview:
 https://www.kaggle.com/c/jigsaw-toxic-severity-rating/overview

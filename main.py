@@ -7,6 +7,7 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
+from sklearn import linear_model
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import LinearSVR
 from sklearn.neighbors import KNeighborsRegressor
@@ -347,7 +348,7 @@ train_X, more_X, less_X, test_X = create_vectors(df['doc'], df_val, df_test, tex
 
 
 ## -- Training & Validating & Testing -- ##
-def train_vali_test(model, train_X, more_X, less_X, test_X, df_test = None):
+def train_val_test(model, train_X, more_X, less_X, test_X, df_test = None):
     model.fit(train_X, df['level'])
 
     more_scores = model.predict(more_X)
@@ -365,21 +366,21 @@ def train_vali_test(model, train_X, more_X, less_X, test_X, df_test = None):
 ## -- Linear Regression -- ##
 # Validation Best: 0.6760993755812409 (with weight)
 reg = LinearRegression()
-train_vali_test(reg, train_X, more_X, less_X, test_X, df_test)
+train_val_test(reg, train_X, more_X, less_X, test_X, df_test)
 
 ## -- Random Forest Regression -- ##
 # Validation Best: 0.6679287896904477
 # rf = RandomForestRegressor(n_jobs = -1)
-# train_vali_test(rf, train_X, more_X, less_X, test_X, df_test)
+# train_val_test(rf, train_X, more_X, less_X, test_X, df_test)
 
 ## -- Support Vector Regression -- ##
 # Validation Best: 0.6711837385412515
 # svr = SVR()
-# train_vali_test(svr, train_X, more_X, less_X, test_X, df_test)
+# train_val_test(svr, train_X, more_X, less_X, test_X, df_test)
 
 ## -- Linear SVR -- ##
 lsvr = LinearSVR(random_state = 530896, max_iter=6000)
-train_vali_test(lsvr, train_X, more_X, less_X, test_X, df_test)
+train_val_test(lsvr, train_X, more_X, less_X, test_X, df_test)
 
 # 530896
 # 0.6787564766839378
@@ -387,13 +388,16 @@ train_vali_test(lsvr, train_X, more_X, less_X, test_X, df_test)
 ## -- Ridge Regression -- ##
 # Validation Best: 0.670087684336389 (min_df = 30, alpha = 5, with lemma & clean)
 # rg = Ridge(alpha = 5)
-# train_vali_test(rg, train_X, more_X, less_X, test_X, df_test)
+# train_val_test(rg, train_X, more_X, less_X, test_X, df_test)
 
+## -- Lasso Regression -- ##
+# lasso = linear_model.Lasso(alpha = 0.1)
+# train_val_test(lasso, train_X, more_X, less_X, test_X, df_test)
 
 ## -- KNN -- ##
 # Validation Best: 0.6262123023781054 (k = 10, prof, punc, upper)
 # knn = KNeighborsRegressor(n_neighbors = 10, n_jobs=-1)
-# train_vali_test(knn, train_X, more_X, less_X, test_X, df_test)
+# train_val_test(knn, train_X, more_X, less_X, test_X, df_test)
 
 
 ## -- Feature Importance -- ##
