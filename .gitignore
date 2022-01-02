@@ -1,3 +1,4 @@
 jigsaw/**
 Data/**
 *.pickle
+__pycache__/**
